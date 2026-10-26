@@ -6,7 +6,7 @@ from datetime import UTC, datetime
 
 import pytest
 
-from custom_components.spaceapi.parser import InvalidSpaceApiData, parse_space
+from custom_components.spaceapi_client.parser import InvalidSpaceApiData, parse_space
 
 from .conftest import load_fixture_json
 
@@ -114,7 +114,7 @@ def test_robust_against_garbage() -> None:
 
 def test_temperature_unit_variants() -> None:
     """Units like "C" or "°c" still map to Celsius."""
-    from custom_components.spaceapi.sensor import _point_meta
+    from custom_components.spaceapi_client.sensor import _point_meta
 
     data = parse_space(
         {

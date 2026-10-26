@@ -18,8 +18,10 @@ from homeassistant.helpers import device_registry as dr, entity_registry as er
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 from pytest_homeassistant_custom_component.test_util.aiohttp import AiohttpClientMocker
 
-from custom_components.spaceapi.const import DOMAIN
-from custom_components.spaceapi.diagnostics import async_get_config_entry_diagnostics
+from custom_components.spaceapi_client.const import DOMAIN
+from custom_components.spaceapi_client.diagnostics import (
+    async_get_config_entry_diagnostics,
+)
 
 from .conftest import SPACE_URL, load_fixture_json, setup_entry
 

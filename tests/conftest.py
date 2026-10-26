@@ -13,7 +13,7 @@ import pytest
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 from pytest_homeassistant_custom_component.test_util.aiohttp import AiohttpClientMocker
 
-from custom_components.spaceapi.const import DIRECTORY_URL, DOMAIN
+from custom_components.spaceapi_client.const import DIRECTORY_URL, DOMAIN
 
 FIXTURES = Path(__file__).parent / "fixtures"
 SPACE_URL = "https://example.org/spaceapi.json"

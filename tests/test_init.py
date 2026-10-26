@@ -17,7 +17,7 @@ from pytest_homeassistant_custom_component.common import (
 )
 from pytest_homeassistant_custom_component.test_util.aiohttp import AiohttpClientMocker
 
-from custom_components.spaceapi.const import EVENT_STATE_CHANGED
+from custom_components.spaceapi_client.const import EVENT_STATE_CHANGED
 
 from .conftest import SPACE_URL, setup_entry
 

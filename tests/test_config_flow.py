@@ -12,7 +12,7 @@ from homeassistant.data_entry_flow import FlowResultType
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 from pytest_homeassistant_custom_component.test_util.aiohttp import AiohttpClientMocker
 
-from custom_components.spaceapi.const import (
+from custom_components.spaceapi_client.const import (
     CONF_SCAN_INTERVAL,
     CONF_SEARCH,
     CONF_SPACE,

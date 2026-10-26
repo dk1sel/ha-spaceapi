@@ -1,6 +1,6 @@
 {
-  "domain": "spaceapi",
-  "name": "SpaceAPI",
+  "domain": "spaceapi_client",
+  "name": "SpaceAPI Client",
   "codeowners": ["@dk1sel"],
   "config_flow": true,
   "documentation": "https://github.com/dk1sel/ha-spaceapi",

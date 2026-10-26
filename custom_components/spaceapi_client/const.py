@@ -5,7 +5,7 @@ from __future__ import annotations
 from datetime import timedelta
 from typing import Final
 
-DOMAIN: Final = "spaceapi"
+DOMAIN: Final = "spaceapi_client"
 
 DIRECTORY_URL: Final = "https://directory.spaceapi.io/"
 

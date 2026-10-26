@@ -1,4 +1,4 @@
-# SpaceAPI für Home Assistant
+# SpaceAPI Client für Home Assistant
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://hacs.xyz/)
 [![Tests](https://github.com/dk1sel/ha-spaceapi/actions/workflows/tests.yml/badge.svg)](https://github.com/dk1sel/ha-spaceapi/actions/workflows/tests.yml)
@@ -14,16 +14,20 @@ und stellt sie in Home Assistant als Entitäten bereit: Offen/Zu, Statusmeldung,
 (Temperatur, Luftfeuchte, CO₂, Strom, Wind, Personen vor Ort, Getränkevorrat …), Kontaktdaten,
 Webcams und den Standort auf der Karte.
 
+> **Hinweis:** Die Domain ist `spaceapi_client`. Sie ist bewusst getrennt von der eingebauten
+> Home-Assistant-Integration [`spaceapi`](https://www.home-assistant.io/integrations/spaceapi/),
+> die den *eigenen* Space veröffentlicht. Beide können parallel genutzt werden.
+
 ### Installation über HACS (Custom Repository)
 
 1. In Home Assistant **HACS** öffnen.
 2. Oben rechts auf **⋮ → Benutzerdefinierte Repositories** klicken.
 3. Als Repository `https://github.com/dk1sel/ha-spaceapi` eintragen, als Typ **Integration** wählen und **Hinzufügen** klicken.
-4. In HACS nach **SpaceAPI** suchen, öffnen und **Herunterladen** klicken.
+4. In HACS nach **SpaceAPI Client** suchen, öffnen und **Herunterladen** klicken.
 5. Home Assistant **neu starten**.
-6. **Einstellungen → Geräte & Dienste → Integration hinzufügen → SpaceAPI**.
+6. **Einstellungen → Geräte & Dienste → Integration hinzufügen → SpaceAPI Client**.
 
-Manuell geht es auch: den Ordner `custom_components/spaceapi` in das Verzeichnis
+Manuell geht es auch: den Ordner `custom_components/spaceapi_client` in das Verzeichnis
 `config/custom_components/` von Home Assistant kopieren und neu starten.
 
 ### Einrichtung
@@ -89,7 +93,7 @@ möglich gelesen.
 
 ### Diagnose
 
-Unter **Geräte & Dienste → SpaceAPI → ⋮ → Diagnose herunterladen** gibt es die Roh-Antwort der API.
+Unter **Geräte & Dienste → SpaceAPI Client → ⋮ → Diagnose herunterladen** gibt es die Roh-Antwort der API.
 
 ### Entwicklung
 
@@ -110,16 +114,20 @@ into Home Assistant: open/closed state, status message, every sensor value (temp
 CO₂, power, wind, people present, beverage supply …), contact details, webcams and the location on
 the map.
 
+> **Note:** The domain is `spaceapi_client`, deliberately separate from Home Assistant's built-in
+> [`spaceapi`](https://www.home-assistant.io/integrations/spaceapi/) integration (which *publishes*
+> your own space). Both can be used side by side.
+
 ### Installation via HACS (custom repository)
 
 1. Open **HACS** in Home Assistant.
 2. Click **⋮ → Custom repositories** (top right).
 3. Enter `https://github.com/dk1sel/ha-spaceapi`, choose type **Integration**, click **Add**.
-4. Search HACS for **SpaceAPI**, open it and click **Download**.
+4. Search HACS for **SpaceAPI Client**, open it and click **Download**.
 5. **Restart** Home Assistant.
-6. **Settings → Devices & services → Add integration → SpaceAPI**.
+6. **Settings → Devices & services → Add integration → SpaceAPI Client**.
 
-Manual installation: copy `custom_components/spaceapi` into Home Assistant's
+Manual installation: copy `custom_components/spaceapi_client` into Home Assistant's
 `config/custom_components/` folder and restart.
 
 ### Setup
@@ -161,7 +169,7 @@ best-effort basis.
 
 ### Diagnostics
 
-**Devices & services → SpaceAPI → ⋮ → Download diagnostics** contains the raw API response.
+**Devices & services → SpaceAPI Client → ⋮ → Download diagnostics** contains the raw API response.
 
 ### Development
 
