@@ -163,7 +163,7 @@ async def test_master_data(
     assert entity_registry.async_get(website.entity_id).entity_category == "diagnostic"
 
     address = hass.states.get("sensor.test_hackspace_address")
-    assert address.state.startswith("Teststraße 1")
+    assert address.state.startswith("1 Test Street")
     assert address.attributes["timezone"] == "Europe/Berlin"
 
     assert hass.states.get("sensor.test_hackspace_e_mail").state == "info@example.org"

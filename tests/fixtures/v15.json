@@ -4,7 +4,7 @@
   "logo": "https://example.org/logo.png",
   "url": "https://example.org",
   "location": {
-    "address": "Teststraße 1, 12345 Teststadt, Germany",
+    "address": "1 Test Street, Testville, Germany",
     "lat": 52.52,
     "lon": 13.405,
     "timezone": "Europe/Berlin",
