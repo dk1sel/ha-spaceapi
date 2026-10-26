@@ -1,4 +1,6 @@
-<img src="custom_components/spaceapi_client/brand/icon.png" alt="SpaceAPI Client Logo" width="128" align="right">
+<p align="center">
+  <img src="custom_components/spaceapi_client/brand/icon.png" alt="SpaceAPI Client Logo" width="128">
+</p>
 
 # SpaceAPI Client für Home Assistant
 
