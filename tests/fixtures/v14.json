@@ -1,0 +1,15 @@
+{
+  "api": "0.13",
+  "api_compatibility": ["14"],
+  "space": "Fourteen Space",
+  "logo": "https://fourteen.example/logo.svg",
+  "url": "https://fourteen.example",
+  "location": {"address": "Somewhere 5", "lat": 48.1, "lon": 11.5},
+  "state": {"open": false, "lastchange": 1600000000},
+  "contact": {"email": "hi@fourteen.example", "twitter": "@fourteen"},
+  "issue_report_channels": ["email"],
+  "sensors": {
+    "temperature": [{"value": 20, "unit": "°C", "location": "Hall"}],
+    "people_now_present": [{"value": 0}]
+  }
+}

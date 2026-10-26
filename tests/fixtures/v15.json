@@ -1,0 +1,68 @@
+{
+  "api_compatibility": ["14", "15"],
+  "space": "Test Hackspace",
+  "logo": "https://example.org/logo.png",
+  "url": "https://example.org",
+  "location": {
+    "address": "Teststraße 1, 12345 Teststadt, Germany",
+    "lat": 52.52,
+    "lon": 13.405,
+    "timezone": "Europe/Berlin",
+    "country_code": "DE"
+  },
+  "cam": ["https://example.org/cam1.jpg", "https://example.org/cam2.jpg"],
+  "state": {
+    "open": true,
+    "lastchange": 1700000000,
+    "message": "Open until midnight",
+    "trigger_person": "Alice",
+    "icon": {"open": "https://example.org/open.png", "closed": "https://example.org/closed.png"}
+  },
+  "events": [
+    {"name": "Alice", "type": "check-in", "timestamp": 1700000000},
+    {"name": "Bob", "type": "check-out", "timestamp": 1700000100}
+  ],
+  "contact": {
+    "email": "info@example.org",
+    "phone": "+49 30 123456",
+    "matrix": "#space:example.org",
+    "mastodon": "@space@chaos.social",
+    "irc": "ircs://irc.libera.chat/#space",
+    "keymasters": [{"name": "Alice", "email": "alice@example.org"}]
+  },
+  "sensors": {
+    "temperature": [
+      {"value": 21.5, "unit": "°C", "location": "Lounge"},
+      {"value": 18.0, "unit": "°C", "location": "Workshop", "name": "Ceiling"},
+      {"value": 70.0, "unit": "°F", "location": "Lounge"}
+    ],
+    "humidity": [{"value": 45, "unit": "%", "location": "Lounge"}],
+    "carbondioxide": [{"value": 0.05, "unit": "vol%", "location": "Lounge"}],
+    "barometer": [{"value": 1013.2, "unit": "hPa", "location": "Roof"}],
+    "door_locked": [{"value": true, "location": "Front door"}],
+    "power_consumption": [{"value": 350, "unit": "W", "location": "Main"}],
+    "power_generation": [{"value": 120, "unit": "VA", "location": "Roof", "name": "Solar"}],
+    "wind": [{"properties": {
+      "speed": {"value": 3.5, "unit": "m/s"},
+      "gust": {"value": 7.0, "unit": "m/s"},
+      "direction": {"value": 270, "unit": "°"},
+      "elevation": {"value": 30, "unit": "m"}
+    }, "location": "Roof"}],
+    "radiation": {"gamma": [{"value": 0.12, "unit": "µSv/h", "location": "Lab"}]},
+    "network_connections": [{"type": "wifi", "value": 12, "location": "Space"}],
+    "account_balance": [{"value": 1234.56, "unit": "EUR", "location": "Bank"}],
+    "total_member_count": [{"value": 42}],
+    "people_now_present": [{"value": 3, "names": ["Alice", "Bob", "Carol"]}],
+    "beverage_supply": [{"value": 24, "unit": "btl", "name": "Club-Mate"}],
+    "network_traffic": [{"properties": {
+      "bits_per_second": {"value": 1000000, "maximum": 100000000},
+      "packets_per_second": {"value": 500}
+    }}]
+  },
+  "feeds": {
+    "blog": {"type": "rss", "url": "https://example.org/blog.rss"},
+    "calendar": {"type": "ical", "url": "https://example.org/cal.ics"}
+  },
+  "projects": ["https://github.com/example"],
+  "links": [{"name": "Wiki", "url": "https://wiki.example.org"}]
+}

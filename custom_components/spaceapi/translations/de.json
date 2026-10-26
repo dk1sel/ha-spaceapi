@@ -1,0 +1,217 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Hackerspace hinzufügen",
+        "description": "Durchsuche das SpaceAPI-Verzeichnis (directory.spaceapi.io) nach dem Namen oder gib die URL eines SpaceAPI-Endpunkts direkt ein.",
+        "data": {
+          "search": "Suche",
+          "url": "SpaceAPI-URL"
+        },
+        "data_description": {
+          "search": "Teil des Space-Namens, z. B. „chaos“. Groß-/Kleinschreibung egal.",
+          "url": "Optional: eigene Endpunkt-URL. Hat Vorrang vor der Suche."
+        }
+      },
+      "select": {
+        "title": "Space auswählen",
+        "description": "{count} Spaces passen zu „{search}“.",
+        "data": {
+          "space": "Space"
+        }
+      }
+    },
+    "error": {
+      "no_match": "Kein Space im Verzeichnis passt zu dieser Suche.",
+      "missing_input": "Bitte einen Suchbegriff oder eine URL eingeben.",
+      "invalid_url": "Das ist keine gültige http(s)-URL.",
+      "directory_unavailable": "Das SpaceAPI-Verzeichnis konnte nicht geladen werden. Später erneut versuchen oder die URL direkt eingeben.",
+      "cannot_connect": "Der SpaceAPI-Endpunkt ist nicht erreichbar.",
+      "invalid_api": "Die URL liefert kein gültiges SpaceAPI-Dokument (Feld „space“ fehlt)."
+    },
+    "abort": {
+      "already_configured": "Dieser Space ist bereits eingerichtet."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "SpaceAPI-Optionen",
+        "data": {
+          "scan_interval": "Abrufintervall"
+        },
+        "data_description": {
+          "scan_interval": "Wie oft der Endpunkt abgefragt wird, in Minuten."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "cannot_connect": {
+      "message": "Fehler beim Abrufen von {url}: {error}"
+    },
+    "invalid_response": {
+      "message": "Ungültige SpaceAPI-Antwort von {url}: {error}"
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "open": {
+        "name": "Geöffnet"
+      },
+      "door_locked": {
+        "name": "Türschloss{label}"
+      }
+    },
+    "sensor": {
+      "message": {
+        "name": "Statusmeldung"
+      },
+      "lastchange": {
+        "name": "Letzte Statusänderung"
+      },
+      "website": {
+        "name": "Webseite"
+      },
+      "api_version": {
+        "name": "API-Version"
+      },
+      "address": {
+        "name": "Adresse"
+      },
+      "feeds": {
+        "name": "Feeds"
+      },
+      "projects": {
+        "name": "Projekte"
+      },
+      "links": {
+        "name": "Links"
+      },
+      "keymasters": {
+        "name": "Schlüsselverwalter"
+      },
+      "last_event": {
+        "name": "Letztes Ereignis"
+      },
+      "contact_email": {
+        "name": "E-Mail"
+      },
+      "contact_phone": {
+        "name": "Telefon"
+      },
+      "contact_sip": {
+        "name": "SIP"
+      },
+      "contact_irc": {
+        "name": "IRC"
+      },
+      "contact_matrix": {
+        "name": "Matrix"
+      },
+      "contact_mastodon": {
+        "name": "Mastodon"
+      },
+      "contact_xmpp": {
+        "name": "XMPP"
+      },
+      "contact_mumble": {
+        "name": "Mumble"
+      },
+      "contact_ml": {
+        "name": "Mailingliste"
+      },
+      "contact_issue_mail": {
+        "name": "Problem-E-Mail"
+      },
+      "contact_twitter": {
+        "name": "Twitter"
+      },
+      "contact_facebook": {
+        "name": "Facebook"
+      },
+      "contact_identica": {
+        "name": "Identica"
+      },
+      "contact_foursquare": {
+        "name": "Foursquare"
+      },
+      "contact_gopher": {
+        "name": "Gopher"
+      },
+      "temperature": {
+        "name": "Temperatur{label}"
+      },
+      "humidity": {
+        "name": "Luftfeuchtigkeit{label}"
+      },
+      "carbondioxide": {
+        "name": "Kohlendioxid{label}"
+      },
+      "barometer": {
+        "name": "Luftdruck{label}"
+      },
+      "power_consumption": {
+        "name": "Stromverbrauch{label}"
+      },
+      "power_generation": {
+        "name": "Stromerzeugung{label}"
+      },
+      "network_connections": {
+        "name": "Netzwerkverbindungen{label}"
+      },
+      "account_balance": {
+        "name": "Kontostand{label}"
+      },
+      "total_member_count": {
+        "name": "Mitglieder{label}"
+      },
+      "people_now_present": {
+        "name": "Anwesende Personen{label}"
+      },
+      "beverage_supply": {
+        "name": "Getränkevorrat{label}"
+      },
+      "radiation_alpha": {
+        "name": "Alphastrahlung{label}"
+      },
+      "radiation_beta": {
+        "name": "Betastrahlung{label}"
+      },
+      "radiation_gamma": {
+        "name": "Gammastrahlung{label}"
+      },
+      "radiation_beta_gamma": {
+        "name": "Beta-/Gammastrahlung{label}"
+      },
+      "wind_speed": {
+        "name": "Windgeschwindigkeit{label}"
+      },
+      "wind_gust": {
+        "name": "Windböen{label}"
+      },
+      "wind_direction": {
+        "name": "Windrichtung{label}"
+      },
+      "wind_elevation": {
+        "name": "Höhe Windsensor{label}"
+      },
+      "network_traffic_bits_per_second": {
+        "name": "Netzwerkverkehr{label}"
+      },
+      "network_traffic_packets_per_second": {
+        "name": "Netzwerkpakete{label}"
+      }
+    },
+    "camera": {
+      "webcam": {
+        "name": "Webcam {number}"
+      }
+    },
+    "device_tracker": {
+      "location": {
+        "name": "Standort"
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "domain": "spaceapi",
+  "name": "SpaceAPI",
+  "codeowners": ["@dk1sel"],
+  "config_flow": true,
+  "documentation": "https://github.com/dk1sel/ha-spaceapi",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/dk1sel/ha-spaceapi/issues",
+  "requirements": [],
+  "version": "0.1.0"
+}

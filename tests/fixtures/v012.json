@@ -1,0 +1,15 @@
+{
+  "api": "0.12",
+  "space": "Ancient Space",
+  "logo": "http://ancient.example/logo.png",
+  "url": "http://ancient.example",
+  "address": "Ancient Alley 2",
+  "lat": 51.0,
+  "lon": 7.0,
+  "open": true,
+  "status": "Come in!",
+  "lastchange": 1300000000,
+  "icon": {"open": "http://ancient.example/o.png", "closed": "http://ancient.example/c.png"},
+  "contact": {"email": "a@ancient.example"},
+  "feeds": [{"name": "blog", "type": "rss", "url": "http://ancient.example/rss"}]
+}

@@ -1,0 +1,12 @@
+{
+  "api": "0.13",
+  "space": "Old School Space",
+  "logo": "http://old.example/logo.png",
+  "url": "http://old.example",
+  "location": {"address": "Old Road 1", "lat": "50.0", "lon": "8.0"},
+  "state": {"open": null, "icon": {"open": "http://old.example/o.png", "closed": "http://old.example/c.png"}},
+  "contact": {"email": "old@example", "google": {"plus": "+oldspace"}},
+  "issue_report_channels": ["email"],
+  "feeds": {"blog": {"type": "rss", "url": "http://old.example/rss"}},
+  "cam": ["http://old.example/cam.jpg"]
+}
