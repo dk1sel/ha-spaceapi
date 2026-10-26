@@ -18,6 +18,7 @@ from homeassistant.const import (
     DEGREE,
     PERCENTAGE,
     EntityCategory,
+    Platform,
     UnitOfApparentPower,
     UnitOfDataRate,
     UnitOfLength,
@@ -262,7 +263,7 @@ async def async_setup_entry(
                 )
         return entities
 
-    async_add_dynamic_entities(entry, async_add_entities, _factory)
+    async_add_dynamic_entities(entry, async_add_entities, Platform.SENSOR, _factory)
 
 
 class SpaceSensor(SpaceApiEntity, SensorEntity):

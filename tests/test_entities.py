@@ -284,3 +284,39 @@ async def test_diagnostics(
     assert result["api_version"] == "15"
     assert result["entry"]["data"] == {"url": SPACE_URL}
     assert "temperature_lounge" in result["sensor_keys"]
+
+
+async def test_entity_ids_english_in_german_instance(
+    hass: HomeAssistant,
+    aioclient_mock: AiohttpClientMocker,
+    config_entry: MockConfigEntry,
+    space_v15: dict[str, Any],
+) -> None:
+    """Entity IDs stay English; friendly names follow the instance language."""
+    hass.config.language = "de"
+    await setup_entry(hass, config_entry, aioclient_mock, space_v15)
+
+    expected = {
+        "binary_sensor.test_hackspace_open": "Test Hackspace Geöffnet",
+        "binary_sensor.test_hackspace_door_lock_front_door": (
+            "Test Hackspace Türschloss Front door"
+        ),
+        "sensor.test_hackspace_status_message": "Test Hackspace Statusmeldung",
+        "sensor.test_hackspace_temperature_lounge": "Test Hackspace Temperatur Lounge",
+        "sensor.test_hackspace_air_pressure_roof": "Test Hackspace Luftdruck Roof",
+        "sensor.test_hackspace_people_present": "Test Hackspace Anwesende Personen",
+        "sensor.test_hackspace_e_mail": "Test Hackspace E-Mail",
+        "camera.test_hackspace_webcam_1": "Test Hackspace Webcam 1",
+        "device_tracker.test_hackspace_location": "Test Hackspace Standort",
+    }
+    for entity_id, friendly_name in expected.items():
+        state = hass.states.get(entity_id)
+        assert state is not None, entity_id
+        assert state.attributes["friendly_name"] == friendly_name
+    assert not [
+        state.entity_id
+        for state in hass.states.async_all()
+        if any(
+            word in state.entity_id for word in ("geoffnet", "temperatur_", "standort")
+        )
+    ]

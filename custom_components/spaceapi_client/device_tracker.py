@@ -5,6 +5,7 @@ from __future__ import annotations
 from collections.abc import Callable
 
 from homeassistant.components.device_tracker import SourceType, TrackerEntity
+from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
@@ -29,7 +30,9 @@ async def async_setup_entry(
             return {}
         return {"location": lambda: SpaceLocation(coordinator)}
 
-    async_add_dynamic_entities(entry, async_add_entities, _factory)
+    async_add_dynamic_entities(
+        entry, async_add_entities, Platform.DEVICE_TRACKER, _factory
+    )
 
 
 class SpaceLocation(SpaceApiEntity, TrackerEntity):

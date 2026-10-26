@@ -49,13 +49,16 @@ Abrufintervall einstellen (Standard 5 Minuten, mindestens 1 Minute).
 
 | Entität | Inhalt |
 |---|---|
-| `binary_sensor.<space>_geoffnet` | Offen/Zu (`state.open`), Attribute `message`, `lastchange`, `trigger_person`, Bild = Status-Icon bzw. Logo |
-| `sensor.<space>_statusmeldung`, `…_letzte_statusanderung` | `state.message`, `state.lastchange` (Zeitstempel) |
+| `binary_sensor.<space>_open` | Offen/Zu (`state.open`), Attribute `message`, `lastchange`, `trigger_person`, Bild = Status-Icon bzw. Logo |
+| `sensor.<space>_status_message`, `…_last_status_change` | `state.message`, `state.lastchange` (Zeitstempel) |
 | Sensoren aus dem `sensors`-Block | je Messpunkt eine Entität mit passender Geräteklasse/Einheit, Name aus `location`/`name` – temperature, humidity, carbondioxide, barometer, radiation, power_consumption, power_generation, wind, network_connections, network_traffic, account_balance, total_member_count, people_now_present, beverage_supply |
-| `binary_sensor.<space>_turschloss_…` | `door_locked` (Geräteklasse Schloss: *an* = entriegelt) |
-| `device_tracker.<space>_standort` | Standort auf der Karte (`location.lat`/`lon`) |
+| `binary_sensor.<space>_door_lock_…` | `door_locked` (Geräteklasse Schloss: *an* = entriegelt) |
+| `device_tracker.<space>_location` | Standort auf der Karte (`location.lat`/`lon`) |
 | `camera.<space>_webcam_N` | Webcams aus `cam` (Standbild) |
 | Diagnose-Sensoren | Webseite (mit Logo), Adresse, API-Version, Kontakte (E-Mail, Telefon, Matrix, Mastodon, IRC, XMPP …), Feeds, Projekte, Links, Keymaster, letztes Ereignis |
+
+Die Entitäts-IDs sind immer englisch (z. B. `sensor.<space>_temperature_lounge`), unabhängig von der
+Sprache der Home-Assistant-Instanz. Die angezeigten Namen sind übersetzt (Deutsch/Englisch).
 
 Neue Messpunkte, die später in der API auftauchen, werden automatisch ergänzt. Fällt ein Wert weg,
 wird die Entität „nicht verfügbar“. Ist die API nicht erreichbar, sind alle Entitäten des Spaces
@@ -156,6 +159,8 @@ polling interval (default 5 minutes, minimum 1 minute).
 | `device_tracker.<space>_location` | location on the map |
 | `camera.<space>_webcam_N` | webcams from `cam` (still image) |
 | Diagnostic sensors | website (with logo), address, API version, contacts, feeds, projects, links, keymasters, last event |
+
+Entity IDs are always English, whatever language your instance uses; friendly names are translated.
 
 Measurements that show up later are added automatically; ones that disappear become unavailable.
 If the API cannot be reached, all entities of that space are unavailable until the next successful

@@ -3,15 +3,34 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Mapping
+import json
+from pathlib import Path
 
+from homeassistant.const import Platform
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
+from homeassistant.util import slugify
 
 from .const import DOMAIN, MANUFACTURER
 from .coordinator import SpaceApiConfigEntry, SpaceApiCoordinator
 from .parser import SpaceData
+
+
+def _load_english_names() -> dict[str, dict[str, str]]:
+    """Read the English entity names (module import runs in the executor)."""
+    path = Path(__file__).parent / "translations" / "en.json"
+    entities = json.loads(path.read_text(encoding="utf-8")).get("entity", {})
+    return {
+        platform: {key: value["name"] for key, value in keys.items()}
+        for platform, keys in entities.items()
+    }
+
+
+# Entity IDs are always built from the English names, whatever language the
+# Home Assistant instance uses. The friendly name stays translated.
+ENGLISH_NAMES = _load_english_names()
 
 
 class SpaceApiEntity(CoordinatorEntity[SpaceApiCoordinator]):
@@ -36,6 +55,27 @@ class SpaceApiEntity(CoordinatorEntity[SpaceApiCoordinator]):
             configuration_url=(data.url if data and data.url else None),
         )
 
+    def set_english_entity_id(self, platform: Platform) -> None:
+        """Suggest an entity ID built from the English name.
+
+        Only used for new entities; IDs already in the registry are kept.
+        """
+        key = self.translation_key
+        if key is None:
+            return
+        name = ENGLISH_NAMES.get(platform, {}).get(key)
+        if name is None:
+            return
+        try:
+            name = name.format(**(self.translation_placeholders or {}))
+        except (KeyError, IndexError, ValueError):
+            return
+        data = self.coordinator.data
+        device = data.space if data else self.coordinator.config_entry.title
+        object_id = slugify(f"{device} {name}")
+        if object_id:
+            self.entity_id = f"{platform}.{object_id}"
+
     @property
     def space(self) -> SpaceData:
         """Return the current data."""
@@ -45,6 +85,7 @@ class SpaceApiEntity(CoordinatorEntity[SpaceApiCoordinator]):
 def async_add_dynamic_entities(
     entry: SpaceApiConfigEntry,
     async_add_entities: AddConfigEntryEntitiesCallback,
+    platform: Platform,
     factory: Callable[[SpaceData], Mapping[str, Callable[[], Entity]]],
 ) -> None:
     """Add entities now and whenever new keys appear in later updates."""
@@ -58,7 +99,10 @@ def async_add_dynamic_entities(
         for key, make in factory(coordinator.data).items():
             if key not in known:
                 known.add(key)
-                new.append(make())
+                entity = make()
+                if isinstance(entity, SpaceApiEntity):
+                    entity.set_english_entity_id(platform)
+                new.append(entity)
         if new:
             async_add_entities(new)
 

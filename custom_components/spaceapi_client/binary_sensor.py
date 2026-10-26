@@ -9,6 +9,7 @@ from homeassistant.components.binary_sensor import (
     BinarySensorDeviceClass,
     BinarySensorEntity,
 )
+from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
@@ -37,7 +38,9 @@ async def async_setup_entry(
                 entities[key] = lambda key=key: SpacePointBinarySensor(coordinator, key)
         return entities
 
-    async_add_dynamic_entities(entry, async_add_entities, _factory)
+    async_add_dynamic_entities(
+        entry, async_add_entities, Platform.BINARY_SENSOR, _factory
+    )
 
 
 class SpaceOpenBinarySensor(SpaceApiEntity, BinarySensorEntity):

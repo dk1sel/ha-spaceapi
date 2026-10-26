@@ -8,6 +8,7 @@ import logging
 
 import aiohttp
 from homeassistant.components.camera import Camera
+from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.entity import Entity
@@ -44,7 +45,7 @@ async def async_setup_entry(
             for index, url in enumerate(data.cams)
         }
 
-    async_add_dynamic_entities(entry, async_add_entities, _factory)
+    async_add_dynamic_entities(entry, async_add_entities, Platform.CAMERA, _factory)
 
 
 class SpaceCamera(SpaceApiEntity, Camera):
