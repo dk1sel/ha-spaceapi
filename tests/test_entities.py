@@ -14,10 +14,13 @@ from homeassistant.const import (
     STATE_UNKNOWN,
 )
 from homeassistant.core import HomeAssistant
+from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers import device_registry as dr, entity_registry as er
+import pytest
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 from pytest_homeassistant_custom_component.test_util.aiohttp import AiohttpClientMocker
 
+from custom_components.spaceapi_client.camera import first_jpeg_frame
 from custom_components.spaceapi_client.const import DOMAIN
 from custom_components.spaceapi_client.diagnostics import (
     async_get_config_entry_diagnostics,
@@ -320,3 +323,64 @@ async def test_entity_ids_english_in_german_instance(
             word in state.entity_id for word in ("geoffnet", "temperatur_", "standort")
         )
     ]
+
+
+FRAME_1 = bytes.fromhex("ffd8") + b"first-frame" + bytes.fromhex("ffd9")
+FRAME_2 = bytes.fromhex("ffd8") + b"second-frame" + bytes.fromhex("ffd9")
+
+
+async def test_webcam_mjpeg_stream(
+    hass: HomeAssistant,
+    aioclient_mock: AiohttpClientMocker,
+    config_entry: MockConfigEntry,
+    space_v15: dict[str, Any],
+) -> None:
+    """An MJPEG stream yields its first frame as still image."""
+    await setup_entry(hass, config_entry, aioclient_mock, space_v15)
+    stream = (
+        b"--myboundary\r\nContent-Type: image/jpeg\r\n\r\n"
+        + FRAME_1
+        + b"\r\n--myboundary\r\nContent-Type: image/jpeg\r\n\r\n"
+        + FRAME_2
+    )
+    aioclient_mock.get(
+        "https://example.org/cam2.jpg",
+        content=stream,
+        headers={"Content-Type": "multipart/x-mixed-replace; boundary=--myboundary"},
+    )
+    image = await async_get_image(hass, "camera.test_hackspace_webcam_2")
+    assert image.content == FRAME_1
+    assert image.content_type == "image/jpeg"
+
+
+async def test_webcam_not_an_image(
+    hass: HomeAssistant,
+    aioclient_mock: AiohttpClientMocker,
+    config_entry: MockConfigEntry,
+    space_v15: dict[str, Any],
+) -> None:
+    """A web page or an MJPEG stream without frame gives no image."""
+    await setup_entry(hass, config_entry, aioclient_mock, space_v15)
+    aioclient_mock.get(
+        "https://example.org/cam1.jpg",
+        text="<html>webcam page</html>",
+        headers={"Content-Type": "text/html"},
+    )
+    aioclient_mock.get(
+        "https://example.org/cam2.jpg",
+        content=b"--myboundary\r\nno jpeg here",
+        headers={"Content-Type": "multipart/x-mixed-replace; boundary=--myboundary"},
+    )
+    for entity_id in (
+        "camera.test_hackspace_webcam_1",
+        "camera.test_hackspace_webcam_2",
+    ):
+        with pytest.raises(HomeAssistantError):
+            await async_get_image(hass, entity_id)
+
+
+def test_first_jpeg_frame() -> None:
+    """Frame extraction from a raw buffer."""
+    assert first_jpeg_frame(b"junk" + FRAME_1 + FRAME_2) == FRAME_1
+    assert first_jpeg_frame(b"junk" + bytes.fromhex("ffd8") + b"incomplete") is None
+    assert first_jpeg_frame(b"nothing") is None

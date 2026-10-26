@@ -24,6 +24,35 @@ _LOGGER = logging.getLogger(__name__)
 PARALLEL_UPDATES = 0
 
 
+# Read at most this much of an MJPEG stream while looking for the first frame.
+MJPEG_MAX_BYTES = 5 * 1024 * 1024
+_JPEG_START = bytes.fromhex("ffd8")
+_JPEG_END = bytes.fromhex("ffd9")
+
+
+def first_jpeg_frame(buffer: bytes) -> bytes | None:
+    """Return the first complete JPEG image in ``buffer``, if there is one."""
+    start = buffer.find(_JPEG_START)
+    if start < 0:
+        return None
+    end = buffer.find(_JPEG_END, start + 2)
+    if end < 0:
+        return None
+    return buffer[start : end + 2]
+
+
+async def _read_first_mjpeg_frame(stream: aiohttp.StreamReader) -> bytes | None:
+    """Read an MJPEG (multipart/x-mixed-replace) stream until the first frame."""
+    buffer = bytearray()
+    async for chunk in stream.iter_chunked(16384):
+        buffer.extend(chunk)
+        if (frame := first_jpeg_frame(bytes(buffer))) is not None:
+            return frame
+        if len(buffer) > MJPEG_MAX_BYTES:
+            break
+    return None
+
+
 def camera_key(url: str) -> str:
     """Return a stable key for a webcam URL."""
     return "cam_" + hashlib.sha1(url.encode(), usedforsecurity=False).hexdigest()[:10]
@@ -49,7 +78,7 @@ async def async_setup_entry(
 
 
 class SpaceCamera(SpaceApiEntity, Camera):
-    """A webcam showing a still image."""
+    """A webcam showing a still image (JPEG/PNG, or the first frame of an MJPEG stream)."""
 
     _attr_translation_key = "webcam"
 
@@ -76,7 +105,14 @@ class SpaceCamera(SpaceApiEntity, Camera):
                 self._url, timeout=aiohttp.ClientTimeout(total=CAMERA_TIMEOUT)
             ) as response:
                 response.raise_for_status()
-                content_type = response.headers.get("Content-Type", "")
+                content_type = response.headers.get("Content-Type", "").lower()
+                if content_type.startswith("multipart/x-mixed-replace"):
+                    frame = await _read_first_mjpeg_frame(response.content)
+                    if frame is None:
+                        _LOGGER.debug("No JPEG frame in MJPEG stream %s", self._url)
+                        return None
+                    self.content_type = "image/jpeg"
+                    return frame
                 if not content_type.startswith("image/"):
                     _LOGGER.debug(
                         "Webcam %s returned %s, not an image", self._url, content_type

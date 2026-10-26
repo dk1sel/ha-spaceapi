@@ -48,7 +48,7 @@ polling interval (default 5 minutes, minimum 1 minute).
 | Sensors from the `sensors` block | one entity per measurement with matching device class/unit, named after `location`/`name`: temperature, humidity, carbondioxide, barometer, radiation, power_consumption, power_generation, wind, network_connections, network_traffic, account_balance, total_member_count, people_now_present, beverage_supply |
 | `binary_sensor.<space>_door_lock_…` | `door_locked` (lock device class: *on* = unlocked) |
 | `device_tracker.<space>_location` | location on the map (`location.lat`/`lon`) |
-| `camera.<space>_webcam_N` | webcams from `cam` (still image) |
+| `camera.<space>_webcam_N` | webcams from `cam`: still image from JPEG/PNG URLs, or the first frame of an MJPEG stream (URLs pointing to web pages show no image) |
 | Diagnostic sensors | website (with logo), address, API version, contacts (e-mail, phone, Matrix, Mastodon, IRC, XMPP …), feeds, projects, links, keymasters, last event |
 
 Entity IDs are always English (e.g. `sensor.<space>_temperature_lounge`), whatever language your
