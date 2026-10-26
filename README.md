@@ -1,3 +1,5 @@
+<img src="custom_components/spaceapi_client/brand/icon.png" alt="SpaceAPI Client Logo" width="128" align="right">
+
 # SpaceAPI Client für Home Assistant
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://hacs.xyz/)

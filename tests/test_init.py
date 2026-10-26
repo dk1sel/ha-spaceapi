@@ -10,6 +10,7 @@ from freezegun.api import FrozenDateTimeFactory
 from homeassistant.config_entries import ConfigEntryState
 from homeassistant.const import STATE_OFF, STATE_ON, STATE_UNAVAILABLE
 from homeassistant.core import Event, HomeAssistant
+from homeassistant.loader import async_get_integration
 from pytest_homeassistant_custom_component.common import (
     MockConfigEntry,
     async_capture_events,
@@ -160,3 +161,9 @@ async def test_new_sensors_are_added(
     assert hass.states.get("sensor.test_hackspace_temperature_lounge").state == (
         STATE_UNAVAILABLE
     )
+
+
+async def test_brand_icon(hass: HomeAssistant) -> None:
+    """The integration ships its own icon in brand/."""
+    integration = await async_get_integration(hass, "spaceapi_client")
+    assert integration.has_branding
